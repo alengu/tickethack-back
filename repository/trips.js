@@ -16,7 +16,7 @@ const getTripsByDate = async ({ departure, arrival, date }) => {
     },
   };
 
-  return await TripsModel.find(searchParams);
+  return await TripsModel.find(searchParams).sort({ date: 1 });
 };
 
 module.exports = { getTripsByDate };
