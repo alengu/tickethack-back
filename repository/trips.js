@@ -1,6 +1,6 @@
 const moment = require("moment");
 
-const trip = require("../models/trips");
+const Trip = require("../models/trips");
 const { firstLetterCapital } = require("../utils/string");
 
 const getTripsByDate = async ({ departure, arrival, date }) => {
@@ -16,7 +16,7 @@ const getTripsByDate = async ({ departure, arrival, date }) => {
     },
   };
 
-  return await TripsModel.find(searchParams).sort({ date: 1 });
+  return await Trip.find(searchParams).sort({ date: 1 });
 };
 
 module.exports = { getTripsByDate };
