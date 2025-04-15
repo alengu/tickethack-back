@@ -1,6 +1,6 @@
 const moment = require("moment");
 
-const TripsModel = require("../models/trips");
+const trip = require("../models/trips");
 const { firstLetterCapital } = require("../utils/string");
 
 const getTripsByDate = async ({ departure, arrival, date }) => {
