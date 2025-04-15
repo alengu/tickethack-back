@@ -5,7 +5,8 @@ const router = express.Router();
 
 //router.get("/", searchTrips);
 
-const {addTrip} = require("../controllers/carts")
+const {addTrip, deleteTrip} = require("../controllers/carts")
 router.post("/add-trip", addTrip)
+router.delete("/delete-trip", deleteTrip)
 
 module.exports = router;

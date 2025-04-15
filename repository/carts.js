@@ -23,14 +23,20 @@ const createCart = async () => {
 };
 
 const addTripToCart = async (tripID) => {
-  console.log("trying to add order")
+  console.log("trying to add trip to cart")
   const cart = await Cart.updateOne(
     { userID: process.env.USER_ID },
     { $push: { trips: tripID } }
   );
 
-  console.log("try to update finished")
+
   console.log(cart);
 };
 
-module.exports = { checkAvailableCart, addTripToCart, createCart };
+const deleteTripInCart = async (tripID) => {
+    console.log("deleting trip in cart")
+    const updatedCart = await Cart.updateOne( 
+        { userID: process.env.USER_ID },
+        { $pull: { trips: tripID } }) 
+}
+module.exports = { checkAvailableCart, addTripToCart, createCart, deleteTripInCart };
