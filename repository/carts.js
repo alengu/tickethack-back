@@ -1,7 +1,7 @@
 const moment = require("moment");
 
 const Cart = require("../models/carts");
-const cartsModel = require("../models/carts");
+const Trip = require("../models/trips");
 
 const checkAvailableCart = async () => {
   const searchParams = {
@@ -32,7 +32,7 @@ const getCart = async () => {
   //console.log(cart)
   if (!cart) {
     return null;
-  } else if (cart[0].trips.length > 1) {
+  } else if (cart.trips.length > 1) {
     console.log(cart[0].trips[0]);
     cart[0].trips.sort((a, b) => new Date(a.date) - new Date(b.date));
   }
@@ -42,6 +42,8 @@ const getCart = async () => {
 
 const addTripToCart = async (tripID) => {
   console.log("trying to add trip to cart");
+
+  const addedTrip = await Trip
   const cart = await Cart.updateOne(
     { userID: process.env.USER_ID },
     { $push: { trips: tripID } }
