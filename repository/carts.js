@@ -33,7 +33,6 @@ const getCart = async () => {
   if (!cart) {
     return null;
   } else if (cart.trips.length > 1) {
-    
     cart.trips.sort((a, b) => new Date(a.date) - new Date(b.date));
   }
 
@@ -42,11 +41,13 @@ const getCart = async () => {
 
 const addTripToCart = async (tripID) => {
   console.log("trying to add trip to cart");
+  const addedTrip = await Trip.findById(tripID);
 
   const cart = await Cart.updateOne(
     { userID: process.env.USER_ID },
-    { $push: { trips: tripID } }
+    { $push: { trips: tripID }, $inc: { totalCart: addedTrip.price } }
   );
+
   //console.log(cart);
   return cart;
 };
