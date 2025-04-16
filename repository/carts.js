@@ -33,8 +33,8 @@ const getCart = async () => {
   if (!cart) {
     return null;
   } else if (cart.trips.length > 1) {
-    console.log(cart[0].trips[0]);
-    cart[0].trips.sort((a, b) => new Date(a.date) - new Date(b.date));
+    
+    cart.trips.sort((a, b) => new Date(a.date) - new Date(b.date));
   }
 
   return cart;
