@@ -5,6 +5,7 @@ const logger = require("morgan");
 const tripsRouter = require("./routes/trips");
 const cartsRouter = require("./routes/carts");
 const bookingsRouter = require("./routes/bookings");
+const usersRouter = require("./routes/users");
 const dotenv = require("dotenv");
 const cors = require("cors");
 dotenv.config();
@@ -23,5 +24,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/trips", tripsRouter);
 app.use("/carts", cartsRouter);
 app.use("/bookings",bookingsRouter);
+app.use("/users", usersRouter)
 
 module.exports = app;
