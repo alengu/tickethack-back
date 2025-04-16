@@ -43,7 +43,6 @@ const getCart = async () => {
 const addTripToCart = async (tripID) => {
   console.log("trying to add trip to cart");
 
-  const addedTrip = await Trip
   const cart = await Cart.updateOne(
     { userID: process.env.USER_ID },
     { $push: { trips: tripID } }
