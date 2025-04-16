@@ -45,8 +45,8 @@ const addTripToCart = async (tripID) => {
   const cart = await Cart.updateOne(
     { userID: process.env.USER_ID },
     { $push: { trips: tripID } }
-  ).populate("trips");
-  console.log(cart);
+  );
+  //console.log(cart);
   return cart;
 };
 
