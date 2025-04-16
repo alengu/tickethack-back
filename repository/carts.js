@@ -58,6 +58,7 @@ const deleteTripInCart = async (tripID) => {
     { userID: process.env.USER_ID },
     { $pull: { trips: tripID } }
   );
+  return updatedCart
 };
 module.exports = {
   checkAvailableCart,
