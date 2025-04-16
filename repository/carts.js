@@ -53,15 +53,13 @@ const addTripToCart = async (tripID) => {
 };
 
 const deleteTripInCart = async (tripID) => {
-
-  const deletedTrip = Trip.findById(tripID)
-  const PriceToDecrement =  (-1)*deletedTrip.price
+  const deletedTrip = await Trip.findById(tripID);
 
   const updatedCart = await Cart.updateOne(
     { userID: process.env.USER_ID },
-    { $pull: { trips: tripID },$inc: {totalCart:PriceToDecrement} }
+    { $pull: { trips: tripID }, $inc: { totalCart: -deletedTrip.price } }
   );
-  return updatedCart
+  return updatedCart;
 };
 module.exports = {
   checkAvailableCart,
