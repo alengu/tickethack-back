@@ -20,7 +20,7 @@ const createCart = async () => {
     totalCart: 0,
   });
 
-  newCart.save().then(() => console.log("new cart created"));
+  await newCart.save().then(() => console.log("new cart created"));
 
   return newCart;
 };
