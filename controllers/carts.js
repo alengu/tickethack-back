@@ -1,4 +1,4 @@
-const { checkAvailableCart, addTripToCart, createCart, deleteTripInCart } = require("../repository/carts");
+const { checkAvailableCart, addTripToCart, createCart, deleteTripInCart, getCart } = require("../repository/carts");
 
 const addTrip = async (req, res, next) => {
   try {
@@ -30,4 +30,15 @@ const deleteTrip = async (req, res, next) => {
       }
 }
 
-module.exports = { addTrip, deleteTrip };
+const displayCart = async (req, res, next) =>  {
+  try {
+    const cart = await getCart()
+    res.json(cart)
+  }
+  catch (exception) {
+    console.log(exception);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
+module.exports = { addTrip, deleteTrip, displayCart };
