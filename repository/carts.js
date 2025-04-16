@@ -1,7 +1,7 @@
 const moment = require("moment");
 
 const Cart = require("../models/carts");
-const { firstLetterCapital } = require("../utils/string");
+const cartsModel = require("../models/carts");
 
 const checkAvailableCart = async () => {
   const searchParams = {
@@ -17,26 +17,50 @@ const createCart = async () => {
     status: "pending",
     userID: process.env.USER_ID,
     trips: [],
+    totalCart: 0,
   });
 
   newCart.save().then(() => console.log("new cart created"));
+
+  return newCart;
+};
+
+const getCart = async () => {
+  const cart = await Cart.findOne({ userID: process.env.USER_ID }).populate(
+    "trips"
+  );
+  //console.log(cart)
+  if (!cart) {
+    return null;
+  } else if (cart[0].trips.length > 1) {
+    console.log(cart[0].trips[0]);
+    cart[0].trips.sort((a, b) => new Date(a.date) - new Date(b.date));
+  }
+
+  return cart;
 };
 
 const addTripToCart = async (tripID) => {
-  console.log("trying to add trip to cart")
+  console.log("trying to add trip to cart");
   const cart = await Cart.updateOne(
     { userID: process.env.USER_ID },
     { $push: { trips: tripID } }
-  );
-
-
+  ).populate("trips");
   console.log(cart);
+  return cart;
 };
 
 const deleteTripInCart = async (tripID) => {
-    console.log("deleting trip in cart")
-    const updatedCart = await Cart.updateOne( 
-        { userID: process.env.USER_ID },
-        { $pull: { trips: tripID } }) 
-}
-module.exports = { checkAvailableCart, addTripToCart, createCart, deleteTripInCart };
+  console.log("deleting trip in cart");
+  const updatedCart = await Cart.updateOne(
+    { userID: process.env.USER_ID },
+    { $pull: { trips: tripID } }
+  );
+};
+module.exports = {
+  checkAvailableCart,
+  addTripToCart,
+  createCart,
+  deleteTripInCart,
+  getCart,
+};
