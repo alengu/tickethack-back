@@ -53,10 +53,13 @@ const addTripToCart = async (tripID) => {
 };
 
 const deleteTripInCart = async (tripID) => {
-  console.log("deleting trip in cart");
+
+  const deletedTrip = Trip.findById(tripID)
+  const PriceToDecrement =  (-1)*deletedTrip.price
+
   const updatedCart = await Cart.updateOne(
     { userID: process.env.USER_ID },
-    { $pull: { trips: tripID } }
+    { $pull: { trips: tripID },$inc: {totalCart:PriceToDecrement} }
   );
   return updatedCart
 };
